@@ -19,6 +19,7 @@ package io.github.swagger2markup.internal.utils;
 import io.github.swagger2markup.internal.adapter.ParameterAdapter;
 import io.github.swagger2markup.internal.adapter.PropertyAdapter;
 import io.github.swagger2markup.internal.resolver.DocumentResolver;
+import io.github.swagger2markup.internal.type.ArrayType;
 import io.github.swagger2markup.internal.type.ObjectType;
 import io.github.swagger2markup.markup.builder.MarkupDocBuilder;
 import io.github.swagger2markup.model.PathOperation;
@@ -177,7 +178,7 @@ public class ExamplesUtil {
 
     /**
      * Retrieves example payloads for body parameter either from examples or from vendor extensions.
-     * @param parameter parameter to get the examples for 
+     * @param parameter parameter to get the examples for
      * @return examples if found otherwise null
      */
     private static Object getExamplesFromBodyParameter(Parameter parameter) {
@@ -227,6 +228,8 @@ public class ExamplesUtil {
                     if (model instanceof ComposedModel) {
                         //FIXME: getProperties() may throw NullPointerException
                         example = exampleMapForProperties(((ObjectType) ModelUtils.getType(model, definitions, definitionDocumentResolver)).getProperties(), definitions, definitionDocumentResolver, markupDocBuilder, new HashMap<>());
+                    } else if (model instanceof ArrayModel) {
+                        example = getExample(((ArrayModel) model).getItems(),definitions,definitionDocumentResolver,markupDocBuilder,refStack);
                     } else {
                         example = exampleMapForProperties(model.getProperties(), definitions, definitionDocumentResolver, markupDocBuilder, refStack);
                     }
@@ -358,7 +361,10 @@ public class ExamplesUtil {
             return new Object[]{generateExampleForArrayProperty((ArrayProperty) property, definitions, definitionDocumentResolver, markupDocBuilder, refStack)};
         } else if (property instanceof RefProperty) {
             return new Object[]{generateExampleForRefModel(true, ((RefProperty) property).getSimpleRef(), definitions, definitionDocumentResolver, markupDocBuilder, refStack)};
-        } else {
+        } else if (property instanceof ObjectProperty){
+            return new Object[]{exampleMapForProperties(((ObjectProperty) property).getProperties(),definitions,definitionDocumentResolver,markupDocBuilder,refStack)};
+        }
+        else {
             return new Object[]{PropertyAdapter.generateExample(property, markupDocBuilder)};
         }
     }
