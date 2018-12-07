@@ -407,7 +407,7 @@ public class Swagger2MarkupConverter {
 
         public MarkupDocBuilder createMarkupDocBuilder() {
             return MarkupDocBuilders.documentBuilder(config.getMarkupLanguage(),
-                    config.getLineSeparator(), config.getAsciidocPegdownTimeoutMillis()).withAnchorPrefix(config.getAnchorPrefix());
+                    config.getLineSeparator());
         }
 
         public Path getOutputPath() {
