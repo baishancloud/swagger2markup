@@ -75,8 +75,8 @@ public class OverviewDocument extends MarkupComponent<OverviewDocument.Parameter
         applyOverviewDocumentExtension(new Context(Position.DOCUMENT_BEGIN, markupDocBuilder));
         buildDescriptionParagraph(markupDocBuilder, info.getDescription());
         buildVersionInfoSection(markupDocBuilder, info);
-        buildContactInfoSection(markupDocBuilder, info.getContact());
-        buildLicenseInfoSection(markupDocBuilder, info);
+        //buildContactInfoSection(markupDocBuilder, info.getContact());
+        //buildLicenseInfoSection(markupDocBuilder, info);
         buildUriSchemeSection(markupDocBuilder, swagger);
         buildTagsSection(markupDocBuilder, swagger.getTags());
         buildConsumesSection(markupDocBuilder, swagger.getConsumes());

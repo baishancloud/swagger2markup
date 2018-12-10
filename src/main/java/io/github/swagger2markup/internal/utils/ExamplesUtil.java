@@ -100,6 +100,7 @@ public class ExamplesUtil {
         Operation operation = pathOperation.getOperation();
         List<Parameter> parameters = operation.getParameters();
         Map<String, Object> examples = new LinkedHashMap<>();
+        String formDataParameters="";
 
         // Path example should always be included (if generateMissingExamples):
         if (generateMissingExamples)
@@ -160,6 +161,16 @@ public class ExamplesUtil {
                             String pathExample = path + separator + parameter.getName() + "=" + encodeExampleForUrl(abstractSerializableParameterExample);
                             examples.put("path", pathExample);
                         }
+                    } else if (parameter instanceof FormParameter) {
+                        if (formDataParameters.contains("{") && formDataParameters.contains("}")) {
+                            formDataParameters = formDataParameters.substring(0, formDataParameters.length() - 1);
+                        }
+                        if (formDataParameters.contains("{")){
+                            formDataParameters=formDataParameters+","+parameter.getName()+":"+((FormParameter) parameter).getType()+"}";
+                        } else{
+                            formDataParameters="{"+parameter.getName()+":"+((FormParameter) parameter).getType()+"}";
+                        }
+                        example=formDataParameters;
                     } else {
                         example = abstractSerializableParameterExample;
                     }
