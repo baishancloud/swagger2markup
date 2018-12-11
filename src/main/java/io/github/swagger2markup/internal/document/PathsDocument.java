@@ -168,8 +168,10 @@ public class PathsDocument extends MarkupComponent<PathsDocument.Parameters> {
      * @return either the relative or the full path
      */
     private String getBasePath() {
+        // 在我们的环境下要求有schema://host/baseUrl  所以修改baseUrl为schema://host/baseUrl  源代码为单纯baseUrl
         if (config.isBasePathPrefixEnabled()) {
-            return StringUtils.defaultString(context.getSwagger().getBasePath());
+            return StringUtils.defaultString(context.getSwagger().getSchemes()+"://"+context.getSwagger().getHost()
+                    +context.getSwagger().getBasePath());
         }
         return "";
     }

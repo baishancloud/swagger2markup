@@ -112,11 +112,7 @@ public final class PropertyAdapter {
      * @return String example
      */
     private static Object generateArrayExample(ArrayProperty property, MarkupDocBuilder markupDocBuilder) {
-        Property itemProperty = property.getItems();
-        List<Object> exampleArray = new ArrayList<>();
-
-        exampleArray.add(generateExample(itemProperty, markupDocBuilder));
-        return exampleArray;
+        return ExamplesUtil.generateExampleForArrayProperty(property,null,null,markupDocBuilder,null);
     }
 
     /**
@@ -376,10 +372,7 @@ public final class PropertyAdapter {
             }
         } else if (property instanceof ArrayProperty) {
             if (generateMissingExamples) {
-                Property itemProperty = ((ArrayProperty) property).getItems();
-                List<Object> exampleArray = new ArrayList<>();
-                exampleArray.add(generateExample(itemProperty, markupDocBuilder));
-                return Optional.of(exampleArray);
+                return Optional.of(generateExample((ArrayProperty) property, markupDocBuilder));
             }
         } else if (generateMissingExamples) {
             return Optional.of(generateExample(property, markupDocBuilder));

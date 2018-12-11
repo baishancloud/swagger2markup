@@ -1,0 +1,65 @@
+
+[[_paths]]
+== Paths
+
+[[_getcolls]]
+=== Get collections
+....
+GET /collections
+....
+
+
+==== Description
+Get collections
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_collection,Collection>>
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+[[_getpets]]
+=== Get Pets
+....
+GET /pets
+....
+
+
+==== Description
+Get pets
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_pet,Pet>>
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+

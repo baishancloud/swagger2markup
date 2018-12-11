@@ -239,7 +239,7 @@ public class Swagger2MarkupConverter {
         applyOverviewDocument().writeToFile(outputFile, StandardCharsets.UTF_8);
         applyPathsDocument().writeToFile(outputFile, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
         applyDefinitionsDocument().writeToFile(outputFile, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
-        applySecurityDocument().writeToFile(outputFile, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+        //applySecurityDocument().writeToFile(outputFile, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
     }
 
     /**

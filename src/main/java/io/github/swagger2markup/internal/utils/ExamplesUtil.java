@@ -162,14 +162,10 @@ public class ExamplesUtil {
                             examples.put("path", pathExample);
                         }
                     } else if (parameter instanceof FormParameter) {
-                        if (formDataParameters.contains("{") && formDataParameters.contains("}")) {
-                            formDataParameters = formDataParameters.substring(0, formDataParameters.length() - 1);
+                        if (!formDataParameters.equals("")) {
+                            formDataParameters = formDataParameters +"&";
                         }
-                        if (formDataParameters.contains("{")){
-                            formDataParameters=formDataParameters+","+parameter.getName()+":"+((FormParameter) parameter).getType()+"}";
-                        } else{
-                            formDataParameters="{"+parameter.getName()+":"+((FormParameter) parameter).getType()+"}";
-                        }
+                        formDataParameters=formDataParameters+parameter.getName()+"="+((FormParameter) parameter).getType();
                         example=formDataParameters;
                     } else {
                         example = abstractSerializableParameterExample;
@@ -345,7 +341,7 @@ public class ExamplesUtil {
      * @param markupDocBuilder the markup builder
      * @return array of Object
      */
-    private static Object[] generateExampleForArrayProperty(ArrayProperty value, Map<String, Model> definitions, DocumentResolver definitionDocumentResolver, MarkupDocBuilder markupDocBuilder, Map<String, Integer> refStack) {
+    public static Object[] generateExampleForArrayProperty(ArrayProperty value, Map<String, Model> definitions, DocumentResolver definitionDocumentResolver, MarkupDocBuilder markupDocBuilder, Map<String, Integer> refStack) {
         Property property = value.getItems();
         return getExample(property, definitions, definitionDocumentResolver, markupDocBuilder, refStack);
     }
