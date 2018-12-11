@@ -1,8 +1,0 @@
-
-=== Consumes
-
-* `application/json`
-* `application/xml`
-
-
-

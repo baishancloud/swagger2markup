@@ -1,8 +1,0 @@
-
-=== Contact information
-[%hardbreaks]
-__Contact__ : TestName
-__Contact Email__ : test@test.de
-
-
-
