@@ -60,6 +60,14 @@ public class PathOperationComponent extends MarkupComponent<PathOperationCompone
     private final SecuritySchemeComponent securitySchemeComponent;
     private final BodyParameterComponent bodyParameterComponent;
     private final ResponseComponent responseComponent;
+    private String absoluteBasePath;
+
+    public void setAbsoluteBasePath(String absoluteBasePath){
+        this.absoluteBasePath=absoluteBasePath;
+    }
+    public String getAbsoluteBasePath(){
+        return this.absoluteBasePath;
+    }
 
     public PathOperationComponent(Swagger2MarkupConverter.Context context,
                                   DocumentResolver definitionDocumentResolver,
@@ -117,7 +125,7 @@ public class PathOperationComponent extends MarkupComponent<PathOperationCompone
 
         buildTagsSection(markupDocBuilder, operation);
         buildSecuritySchemeSection(markupDocBuilder, operation);
-        buildExamplesSection(markupDocBuilder, operation, locations);
+        buildExamplesSection(markupDocBuilder, operation, locations,getAbsoluteBasePath());
         applyPathsDocumentExtension(new PathsDocumentExtension.Context(Position.OPERATION_END, markupDocBuilder, operation));
         applyPathsDocumentExtension(new PathsDocumentExtension.Context(Position.OPERATION_AFTER, markupDocBuilder, operation));
 
@@ -345,9 +353,9 @@ public class PathOperationComponent extends MarkupComponent<PathOperationCompone
      *
      * @param operation the Swagger Operation
      */
-    private void buildExamplesSection(MarkupDocBuilder markupDocBuilder, PathOperation operation, List<PageBreakLocations> locations) {
+    private void buildExamplesSection(MarkupDocBuilder markupDocBuilder, PathOperation operation, List<PageBreakLocations> locations,String absoluteBasePath) {
 
-        Map<String, Object> generatedRequestExampleMap = ExamplesUtil.generateRequestExampleMap(config.isGeneratedExamplesEnabled(), operation, definitions, definitionDocumentResolver, markupDocBuilder);
+        Map<String, Object> generatedRequestExampleMap = ExamplesUtil.generateRequestExampleMap(config.isGeneratedExamplesEnabled(), operation, definitions, definitionDocumentResolver, markupDocBuilder,absoluteBasePath);
         Map<String, Object> generatedResponseExampleMap = ExamplesUtil.generateResponseExampleMap(config.isGeneratedExamplesEnabled(), operation, definitions, definitionDocumentResolver, markupDocBuilder);
 
         boolean beforeExampleRequestBreak = locations.contains(BEFORE_OPERATION_EXAMPLE_REQUEST);

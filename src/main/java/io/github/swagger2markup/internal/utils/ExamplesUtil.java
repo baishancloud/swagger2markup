@@ -96,7 +96,7 @@ public class ExamplesUtil {
      * @param markupDocBuilder        the markup builder
      * @return an Optional with the example content
      */
-    public static Map<String, Object> generateRequestExampleMap(boolean generateMissingExamples, PathOperation pathOperation, Map<String, Model> definitions, DocumentResolver definitionDocumentResolver, MarkupDocBuilder markupDocBuilder) {
+    public static Map<String, Object> generateRequestExampleMap(boolean generateMissingExamples, PathOperation pathOperation, Map<String, Model> definitions, DocumentResolver definitionDocumentResolver, MarkupDocBuilder markupDocBuilder, String absoluteBasePath) {
         Operation operation = pathOperation.getOperation();
         List<Parameter> parameters = operation.getParameters();
         Map<String, Object> examples = new LinkedHashMap<>();
@@ -104,7 +104,7 @@ public class ExamplesUtil {
 
         // Path example should always be included (if generateMissingExamples):
         if (generateMissingExamples)
-            examples.put("path", pathOperation.getPath());
+            examples.put("path", absoluteBasePath+pathOperation.getPath());
         for (Parameter parameter : parameters) {
             Object example = null;
             if (parameter instanceof BodyParameter) {
