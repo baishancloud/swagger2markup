@@ -44,6 +44,7 @@ public class Labels {
     public static final String FLAGS_READ_ONLY = "flags.read_only";
 
     // Overview Document
+    public static final String BASE_INFO = "base_info";
     public static final String CONTACT_INFORMATION = "contact_information";
     public static final String CONTACT_NAME = "contact_name";
     public static final String CONTACT_EMAIL = "contact_email";

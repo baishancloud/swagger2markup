@@ -71,7 +71,7 @@ public class OverviewDocument extends MarkupComponent<OverviewDocument.Parameter
         Info info = swagger.getInfo();
         buildDocumentTitle(markupDocBuilder, info.getTitle());
         applyOverviewDocumentExtension(new Context(Position.DOCUMENT_BEFORE, markupDocBuilder));
-        buildOverviewTitle(markupDocBuilder, labels.getLabel(Labels.OVERVIEW));
+        buildOverviewTitle(markupDocBuilder, labels.getLabel(Labels.BASE_INFO));
         applyOverviewDocumentExtension(new Context(Position.DOCUMENT_BEGIN, markupDocBuilder));
         buildDescriptionParagraph(markupDocBuilder, info.getDescription());
         buildVersionInfoSection(markupDocBuilder, info);
