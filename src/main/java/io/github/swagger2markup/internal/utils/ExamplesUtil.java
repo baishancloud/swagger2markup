@@ -103,8 +103,20 @@ public class ExamplesUtil {
         String formDataParameters="";
 
         // Path example should always be included (if generateMissingExamples):
-        if (generateMissingExamples)
-            examples.put("path", absoluteBasePath+pathOperation.getPath());
+        if (generateMissingExamples) {
+            String path="";
+            if (absoluteBasePath.contains(",")) {
+                String []pathList=absoluteBasePath.split(",");
+                for (String pathItem:pathList){
+                    path=path+pathItem+pathOperation.getPath()+",";
+                }
+            }else {
+                path= absoluteBasePath+pathOperation.getPath()+",";
+            }
+            examples.put("path", path);
+
+        }
+
         for (Parameter parameter : parameters) {
             Object example = null;
             if (parameter instanceof BodyParameter) {
@@ -151,15 +163,27 @@ public class ExamplesUtil {
                         example = parameter.getName() +":\"" +((HeaderParameter) parameter).getType()+ "\"";
                     } else if (parameter instanceof PathParameter) {
                         String pathExample = (String) examples.get("path");
-                        pathExample = pathExample.replace('{' + parameter.getName() + '}', encodeExampleForUrl(abstractSerializableParameterExample));
+                        if (pathExample.contains(",")){
+                            String []pathList=pathExample.split(",");
+                            pathExample=" ";
+                            for (String pathEx:pathList) {
+                                pathExample=pathExample+pathEx.replace('{' + parameter.getName() + '}', encodeExampleForUrl(abstractSerializableParameterExample))+"\n";
+                            }
+                        }
                         example = pathExample;
                     } else if (parameter instanceof QueryParameter) {
                         if (parameter.getRequired())
                         {
                             String path = (String) examples.get("path");
-                            String separator = path.contains("?") ? "&" : "?";
-                            String pathExample = path + separator + parameter.getName() + "=" + encodeExampleForUrl(abstractSerializableParameterExample);
-                            examples.put("path", pathExample);
+                            if (path.contains(",")){
+                                String []pathList=path.split(",");
+                                path=" ";
+                                for (String pathEx : pathList){
+                                    String separator = pathEx.contains("?") ? "&" : "?";
+                                    path = path+ pathEx + separator + parameter.getName() + "=" + encodeExampleForUrl(abstractSerializableParameterExample)+"\n";
+                                }
+                            }
+                            examples.put("path", path);
                         }
                     } else if (parameter instanceof FormParameter) {
                         if (!formDataParameters.equals("")) {
@@ -180,6 +204,16 @@ public class ExamplesUtil {
                 examples.put(parameter.getIn(), example);
         }
 
+        String ex=examples.get("path").toString();
+        if (ex.contains(",")){
+            String [] exList=ex.split(",");
+            ex=" ";
+            for (String e : exList){
+                ex=ex+e+"\n";
+            }
+            ex.trim();
+            examples.put("path",ex);
+        }
         return examples;
     }
 

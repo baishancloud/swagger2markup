@@ -175,7 +175,17 @@ public class PathsDocument extends MarkupComponent<PathsDocument.Parameters> {
     }
 
     private String getAbsoluteBasePath() {
-        return context.getSwagger().getSchemes() + "://" + context.getSwagger().getHost() + context.getSwagger().getBasePath();
+        String schemes=context.getSwagger().getSchemes().toString();
+        schemes=schemes.substring(1,schemes.length()-1).toLowerCase();
+        if (schemes.contains(",")){
+            String []schemeList=schemes.split(",");
+            String returnValue="";
+            for (String scheme : schemeList){
+                returnValue=returnValue+scheme+ "://" + context.getSwagger().getHost() + context.getSwagger().getBasePath()+",";
+            }
+            return returnValue;
+        }
+        return  schemes+ "://" + context.getSwagger().getHost() + context.getSwagger().getBasePath();
     }
 
     private void buildPathsTitle(MarkupDocBuilder markupDocBuilder, String title) {
